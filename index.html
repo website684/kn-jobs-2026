@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<title>Karnataka's Next Jobs Engine — BetterPlace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Kannada:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#D8342A;--orange-deep:#B0231A;--signal:#E85A4A;--orange-glow:rgba(216,52,42,.20);
+    --gold:#F4B400;--gold-deep:#C88A00;--gold-glow:rgba(244,180,0,.18);
+    --navy:#0A1535;--navy-deep:#050B22;--navy-soft:#1B2A55;
+    --paper:#FAF7F2;--paper-warm:#F4EFE6;
+    --ink:#0A1535;--ink-soft:#3A4566;--ink-mute:#7A8299;
+    --green:#10B981;
+    --line-p:rgba(10,21,53,.12);--line-d:rgba(255,255,255,.12);
+    --tx-d:#EEF1F8;--tx-dmute:#9aa6c4;
+    --serif:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;--kan:'Noto Sans Kannada',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{font-family:var(--sans);background:var(--navy-deep);color:var(--tx-d);overflow:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+  /* fixed design canvas — scaled uniformly to fit any screen. Overlap impossible. */
+  .viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--navy-deep)}
+  .stage{position:relative;width:1280px;height:720px;flex:none;transform-origin:center center;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
+  .slide.active{display:flex;animation:fade .5s ease both}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .slide.dark{background:radial-gradient(130% 120% at 85% 0%,#152252 0%,var(--navy) 52%,var(--navy-deep) 100%);color:var(--tx-d)}
+  .slide.paper{background:var(--paper);color:var(--ink)}
+
+  .body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:54px 76px 18px}
+  .footer{flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;margin:0 76px;padding:13px 0;border-top:1px solid var(--line-d);font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx-dmute)}
+  .paper .footer{border-color:var(--line-p);color:var(--ink-mute)}
+
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);font-weight:500;display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+  .eyebrow::before{content:"";width:28px;height:1.5px;background:var(--orange)}
+  h1{font-family:var(--serif);font-weight:600;line-height:1.0;letter-spacing:-.02em}
+  h2{font-family:var(--serif);font-weight:600;line-height:1.07;letter-spacing:-.015em;font-size:38px;max-width:22ch}
+  .lede{font-size:16.5px;line-height:1.55;color:var(--tx-dmute);max-width:60ch;font-weight:300}
+  .paper .lede{color:var(--ink-soft)}
+  em{font-style:italic;color:var(--signal)}.paper em{color:var(--orange-deep)}
+  strong{font-weight:600;color:#fff}.paper strong{color:var(--ink)}
+  .kan{font-family:var(--kan);font-weight:600}
+  .head{flex:0 0 auto;margin-bottom:22px}
+  .fill{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;justify-content:center}
+
+  /* cover */
+  .cover .body{justify-content:flex-start;padding-top:96px}
+  .cover .glow{position:absolute;top:-18%;right:-10%;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle at 45% 45%,var(--orange-glow),transparent 60%);pointer-events:none}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange);margin-bottom:24px}
+  .cover h1{font-size:76px;max-width:15ch}
+  .cover .kanline{font-family:var(--kan);font-weight:600;font-size:25px;color:var(--gold);margin-top:16px;line-height:1.4}
+  .cover .sub{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;color:var(--signal);margin-top:8px}
+  .cover .tag{margin-top:20px;font-size:17px;color:var(--tx-dmute);max-width:56ch;font-weight:300;line-height:1.55}
+  .cover .prep{margin-top:auto;padding-top:24px}
+  .cover .prep .p1{font-size:13px;color:var(--tx-dmute);margin-bottom:9px}
+  .cover .brands{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--orange)}
+
+  .grid{display:grid;gap:14px}
+  .g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}.g5{grid-template-columns:repeat(5,1fr)}
+  .stat{background:rgba(255,255,255,.04);border:1px solid var(--line-d);border-radius:14px;padding:18px}
+  .paper .stat{background:#fff;border-color:var(--line-p);box-shadow:0 1px 2px rgba(10,21,53,.04)}
+  .stat .num{font-family:var(--serif);font-weight:600;font-size:40px;line-height:1;color:var(--orange);letter-spacing:-.02em}
+  .stat.green .num{color:var(--green)}.stat.navy .num{color:var(--tx-d)}.paper .stat.navy .num{color:var(--ink)}
+  .stat .lab{margin-top:9px;font-size:12px;line-height:1.42;color:var(--tx-dmute)}
+  .paper .stat .lab{color:var(--ink-soft)}
+  .stat .src{margin-top:8px;font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;color:var(--tx-dmute);opacity:.7;text-transform:uppercase}
+  .paper .stat .src{color:var(--ink-mute)}
+  .card{background:rgba(255,255,255,.04);border:1px solid var(--line-d);border-radius:14px;padding:16px 16px}
+  .paper .card{background:#fff;border-color:var(--line-p)}
+  .card h3{font-family:var(--sans);font-weight:600;font-size:14.5px;margin-bottom:6px;color:#fff;display:flex;align-items:center;gap:9px}
+  .paper .card h3{color:var(--ink)}
+  .card p{font-size:12px;line-height:1.48;color:var(--tx-dmute)}
+  .paper .card p{color:var(--ink-soft)}
+  .tick{font-family:var(--mono);font-size:10.5px;color:var(--orange);border:1px solid var(--orange);border-radius:6px;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+  .split.top{align-items:start}
+  .split.narrow{grid-template-columns:1fr 1fr}
+
+  .chip{font-family:var(--mono);font-size:8px;letter-spacing:.08em;text-transform:uppercase;border-radius:5px;padding:2px 6px;display:inline-block;white-space:nowrap}
+  .c-act{color:var(--green);border:1px solid var(--green)}
+  .c-proj{color:var(--orange);border:1px solid var(--orange)}
+  .c-floor{color:var(--signal);border:1px solid var(--signal)}
+  .c-co{color:#9db4ff;border:1px solid #9db4ff}
+  .paper .c-act{color:#0f9d6f;border-color:#0f9d6f}.paper .c-proj{color:var(--orange-deep);border-color:var(--orange-deep)}
+
+  .quote{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;line-height:1.42;color:var(--signal);border-left:3px solid var(--orange);padding-left:18px;max-width:56ch}
+  .paper .quote{color:var(--orange-deep)}
+
+  .stack{display:flex;flex-direction:column;gap:8px}
+  .stack-lab{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx-dmute);margin:1px 0}
+  .srow{display:flex;gap:7px}
+  .node{flex:1;text-align:center;background:rgba(255,255,255,.05);border:1px solid var(--line-d);border-radius:9px;padding:10px 5px;font-size:11.5px;font-weight:500;color:var(--tx-d);line-height:1.2}
+  .node span{font-family:var(--mono);font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:var(--orange);display:block;margin-top:3px}
+  .golden{background:linear-gradient(100deg,var(--gold),var(--gold-deep));color:var(--navy-deep);border-radius:11px;padding:13px;text-align:center;box-shadow:0 8px 24px var(--gold-glow)}
+  .golden .gt{font-family:var(--serif);font-weight:600;font-size:18px;line-height:1.1}
+  .golden .gs{font-family:var(--mono);font-size:8px;letter-spacing:.05em;text-transform:uppercase;margin-top:5px;opacity:.75}
+  .kflag{display:flex;flex-direction:column;width:54px;border-radius:3px;overflow:hidden;margin-bottom:22px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  .kflag span{height:9px}.kflag span:first-child{background:var(--orange)}.kflag span:last-child{background:var(--gold)}
+  .feed{flex:1;text-align:center;background:rgba(255,107,26,.1);border:1px solid rgba(255,107,26,.3);border-radius:8px;padding:8px 3px;font-size:10px;color:var(--signal)}
+  .flow{text-align:center;color:var(--orange);font-size:10px;line-height:.8;letter-spacing:2px}
+  .own{display:flex;flex-direction:column;gap:10px}
+  .own .row{display:flex;gap:11px;align-items:flex-start}
+  .own .k{font-family:var(--mono);font-size:11px;color:var(--orange);flex:none;width:20px;padding-top:2px}
+  .own .v{font-size:13.5px;line-height:1.45;color:var(--tx-dmute)}.own .v b{color:#fff;font-weight:600}
+  .paper .own .v{color:var(--ink-soft)}.paper .own .v b{color:var(--ink)}
+
+  .engine{display:flex;align-items:stretch;gap:8px}
+  .estep{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--line-d);border-radius:12px;padding:15px 12px}
+  .paper .estep{background:#fff;border-color:var(--line-p)}
+  .estep .en{font-family:var(--mono);font-size:10px;color:var(--orange)}
+  .estep h4{font-family:var(--serif);font-weight:600;font-size:17px;margin:6px 0;color:#fff}
+  .paper .estep h4{color:var(--ink)}
+  .estep p{font-size:11px;line-height:1.4;color:var(--tx-dmute)}.paper .estep p{color:var(--ink-soft)}
+  .earrow{align-self:center;color:var(--orange);font-size:17px;flex:none}
+  .eloop{margin-top:13px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--orange);text-transform:uppercase}
+
+  .pillar{background:rgba(255,255,255,.03);border:1px solid var(--line-d);border-radius:14px;padding:18px 15px;display:flex;flex-direction:column}
+  .pillar .pn{font-family:var(--mono);font-size:11px;color:var(--orange);margin-bottom:11px}
+  .pillar .pic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:11px;font-size:17px;background:var(--orange-glow);color:var(--orange)}
+  .pillar h3{font-family:var(--serif);font-weight:600;font-size:15.5px;line-height:1.15;margin-bottom:8px;color:#fff}
+  .pillar p{font-size:11.5px;line-height:1.48;color:var(--tx-dmute)}
+
+  .phasebar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+  .pmini{border:1px solid var(--line-p);border-radius:12px;padding:15px;background:#fff}
+  .pmini .pt{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;color:var(--orange-deep);text-transform:uppercase;margin-bottom:6px}
+  .pmini h4{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--ink);margin-bottom:5px}
+  .pmini p{font-size:11.5px;line-height:1.4;color:var(--ink-soft)}
+
+  .logos{display:flex;flex-wrap:wrap;gap:8px}
+  .logo{font-family:var(--mono);font-size:11px;letter-spacing:.02em;color:var(--tx-d);border:1px solid var(--line-d);border-radius:8px;padding:7px 12px}
+  .paper .logo{color:var(--ink);border-color:var(--line-p)}
+
+  .cta{background:linear-gradient(100deg,var(--orange),var(--orange-deep));color:#fff;border-radius:16px;padding:24px 28px;margin-top:18px}
+  .cta h3{font-family:var(--serif);font-weight:600;font-size:22px;margin-bottom:12px;color:#fff}
+  .cta .asks{display:flex;gap:24px;flex-wrap:wrap}
+  .cta .ask{display:flex;gap:10px;align-items:flex-start;max-width:28ch}
+  .cta .ask .n{font-family:var(--mono);font-weight:600;font-size:14px;color:#fff}
+  .cta .ask .t{font-size:13.5px;line-height:1.4;font-weight:500;color:#fff}
+
+  .sources{columns:2;column-gap:40px;counter-reset:s}
+  .sources li{list-style:none;font-size:11px;line-height:1.45;color:var(--ink-soft);margin-bottom:10px;break-inside:avoid;padding-left:19px;position:relative}
+  .sources li::before{content:counter(s);counter-increment:s;position:absolute;left:0;top:0;font-family:var(--mono);font-size:9.5px;color:var(--orange-deep)}
+  .sources b{color:var(--ink);font-weight:600}
+
+  /* nav — fixed to screen, outside the scaled stage */
+  .nav{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:14px;background:rgba(5,11,34,.82);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:7px 14px}
+  .nav button{background:none;border:none;color:#cdd6ec;cursor:pointer;font-size:16px;padding:3px 7px;border-radius:6px;line-height:1}
+  .nav button:hover{color:var(--orange)}
+  .dots{display:flex;gap:5px}
+  .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.28);cursor:pointer;transition:.25s}
+  .dot.on{background:var(--orange);width:18px;border-radius:3px}
+  .counter{font-family:var(--mono);font-size:10.5px;color:#8593b5;min-width:42px;text-align:center}
+  .bar{position:fixed;top:0;left:0;height:2px;background:var(--orange);z-index:70;transition:width .4s ease}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="viewport">
+<div class="stage" id="stage">
+
+  <!-- 1 COVER -->
+  <section class="slide dark cover active">
+    <div class="glow"></div>
+    <div class="body">
+      <div class="kflag"><span></span><span></span></div>
+      <div class="kicker">A Proposal for the Government of Karnataka</div>
+      <h1>Karnataka's Next<br>Jobs Engine</h1>
+      <div class="kanline">ಕನ್ನಡಿಗರಿಗೆ ಕೆಲಸ — ಕರ್ನಾಟಕದಲ್ಲೇ</div>
+      <div class="sub">Good jobs for Kannadigas — created here, filled here.</div>
+      <p class="tag">Karnataka won the race for India's tech capital. The next race is for its <strong>livelihoods capital</strong> — and its own people must win it.</p>
+      <div class="prep">
+        <div class="p1">Prepared for Hon'ble Chief Minister Shri D. K. Shivakumar&nbsp;·&nbsp;Government of Karnataka</div>
+        <div class="brands">BetterPlace&nbsp;·&nbsp;Built in Bengaluru&nbsp;·&nbsp;goBetter&nbsp;·&nbsp;gigBetter&nbsp;·&nbsp;staffBetter&nbsp;·&nbsp;betterMoney</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 MOMENT -->
+  <section class="slide dark">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">The Moment</div>
+        <h2>The biggest wave of frontline jobs in a generation is landing on Karnataka's soil.</h2>
+      </div>
+      <div class="fill">
+        <div class="split">
+          <div>
+            <p class="lede" style="margin-bottom:16px">Two years of investment commitments have loaded a jobs pipeline that is <strong>overwhelmingly frontline</strong> — EV and factory lines, data-centre and aerospace construction, warehousing, retail, care.</p>
+            <p class="lede">The only question left: will these jobs go to <strong>Kannadiga youth</strong>, skilled and placed at home — or to migrant labour drawn in because our own weren't job-ready in time?</p>
+          </div>
+          <div class="grid g2">
+            <div class="stat"><div class="num">₹10.27<span style="font-size:.42em"> L Cr</span></div><div class="lab">committed at Invest Karnataka 2025 — 6 lakh jobs projected <span class="chip c-proj">Projection</span></div><div class="src">Invest Karnataka 2025</div></div>
+            <div class="stat green"><div class="num">~2.3 L</div><div class="lab">of those jobs already realised by end-2025 <span class="chip c-act">Actual</span></div><div class="src">Govt. of Karnataka, 2025</div></div>
+            <div class="stat navy"><div class="num">₹51,469<span style="font-size:.34em"> Cr</span></div><div class="lab">added at the Feb 2026 conclave — 70,000+ jobs <span class="chip c-proj">Projection</span></div><div class="src">Invest KA Conclave 2026</div></div>
+            <div class="stat"><div class="num">3 in 4</div><div class="lab">of Karnataka's workers are blue &amp; grey collar — the segment this pipeline hires</div><div class="src">PLFS-based analysis</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 3 DEMAND WAVE -->
+  <section class="slide paper">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">The Demand Wave</div>
+        <h2>Where the next decade of jobs comes from.</h2>
+        <p class="lede" style="margin-top:11px">The Feb 2026 conclave maps ₹51,469 Cr across six frontline-heavy sectors. State policy targets add more — <em>separate goals that cannot be summed.</em></p>
+      </div>
+      <div class="fill">
+        <div class="grid g4" style="margin-bottom:14px">
+          <div class="card"><h3>ESDM &amp; Data Centres</h3><p><strong style="color:var(--orange-deep)">₹24,000+ Cr</strong> · 13 companies. Electronics, chips &amp; hyperscale.</p></div>
+          <div class="card"><h3>Aerospace &amp; Defence</h3><p><strong style="color:var(--orange-deep)">₹13,800+ Cr</strong> · 11 companies. Precision manufacturing.</p></div>
+          <div class="card"><h3>Manufacturing</h3><p><strong style="color:var(--orange-deep)">₹6,500+ Cr</strong> · 13 companies. Shop-floor, operators, QA.</p></div>
+          <div class="card"><h3>Automobile &amp; EV</h3><p><strong style="color:var(--orange-deep)">₹5,000+ Cr</strong> · 7 companies. Volvo, River Mobility, EV belt.</p></div>
+        </div>
+        <div class="grid g4">
+          <div class="stat navy"><div class="num">#1</div><div class="lab">India's largest quick-commerce hiring hub — <strong>20%</strong> of national demand <span class="chip c-act">Actual</span></div><div class="src">Industry hiring data, 2025</div></div>
+          <div class="stat"><div class="num">1 L</div><div class="lab">clean-mobility jobs targeted by 2030 (₹50,000 Cr policy) <span class="chip c-proj">Projection</span></div><div class="src">Clean Mobility Policy 2025</div></div>
+          <div class="stat"><div class="num">3.5 L</div><div class="lab">GCC jobs targeted by 2029, incl. frontline support <span class="chip c-proj">Projection</span></div><div class="src">Govt. of Karnataka</div></div>
+          <div class="stat green"><div class="num">47 K</div><div class="lab">direct tourism jobs + 1 lakh+ indirect by 2029 <span class="chip c-proj">Projection</span></div><div class="src">Tourism Policy 2024–29</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 4 SUBSTITUTION -->
+  <section class="slide dark">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">The Readiness Gap</div>
+        <h2>These jobs can — and should — go to Kannadigas first.</h2>
+      </div>
+      <div class="fill">
+        <div class="split">
+          <div>
+            <p class="lede" style="margin-bottom:14px">Today the frontline pipeline runs partly on workers drawn from other states — <strong>46,393 are formally registered, the true number far higher, and 88% are in construction.</strong> That is not a threat. It is <strong>proof of demand our own youth aren't yet ready to meet.</strong></p>
+            <p class="lede" style="margin-bottom:14px">Close the readiness gap and the same jobs go to skilled Kannadigas — with the <strong>wages, taxes and skills staying in Karnataka</strong>. The goal isn't to shut anyone out; it's to make our own youth the first choice, statewide — not just in Bengaluru.</p>
+            <div class="quote">The youth of North &amp; Kalyana Karnataka are ready to work. What's missing is the pipeline that connects them to the jobs.</div>
+          </div>
+          <div class="grid g2">
+            <div class="stat"><div class="num" style="color:var(--signal)">88%</div><div class="lab">of registered migrant workers are in construction (40,945 of 46,393) <span class="chip c-floor">Reg. floor</span></div><div class="src">KA Labour Dept, 2026</div></div>
+            <div class="stat"><div class="num">72.5%</div><div class="lab">of registered migrants come from WB, Bihar, Jharkhand, UP &amp; Odisha</div><div class="src">KA Labour Dept, 2026</div></div>
+            <div class="stat green"><div class="num">20%</div><div class="lab">of India's quick-commerce hiring is in Karnataka — mostly migrant &amp; gig today <span class="chip c-act">Actual</span></div><div class="src">Industry data, 2025</div></div>
+            <div class="stat navy"><div class="num">0</div><div class="lab">skill-mission meetings in Bidar, Dharwad &amp; Gadag across 2017–23 <span class="chip c-act">CAG</span></div><div class="src">CAG Karnataka, 2025</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 5 CAG -->
+  <section class="slide paper">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">Why Skilling Hasn't Converted &nbsp;·&nbsp; <span class="chip c-act">CAG audit, 2025</span></div>
+        <h2>Karnataka's own auditor already found the gap.</h2>
+      </div>
+      <div class="fill">
+        <div class="split">
+          <div>
+            <p class="lede" style="margin-bottom:13px">The Comptroller &amp; Auditor General reviewed the Chief Minister's Kaushalya Karnataka Yojane. The finding wasn't a lack of effort — it was skilling built <strong>without demand</strong>.</p>
+            <div class="own">
+              <div class="row"><span class="k">→</span><span class="v"><b>Courses chosen without employer-vacancy evidence</b> — no skill-gap analysis preceded training.</span></div>
+              <div class="row"><span class="k">→</span><span class="v">Training delivered in only <b>170 of 719</b> identified job roles.</span></div>
+              <div class="row"><span class="k">→</span><span class="v">The result: certificates that didn't convert to jobs.</span></div>
+            </div>
+            <div class="quote" style="margin-top:18px">BetterPlace inverts this: <strong style="color:var(--orange-deep)">demand first, placement verified, paid on outcomes.</strong></div>
+          </div>
+          <div class="grid g2">
+            <div class="stat"><div class="num" style="color:var(--orange-deep)">18%</div><div class="lab">of trainees placed — against a stipulated <strong>70%</strong> target</div><div class="src">CAG, 2017–23</div></div>
+            <div class="stat"><div class="num">8.8%</div><div class="lab">of the 13.15 lakh registered were ever trained</div><div class="src">CAG, 2017–23</div></div>
+            <div class="stat navy"><div class="num">170<span style="font-size:.38em">/719</span></div><div class="lab">job roles trained for — 549 got no training at all</div><div class="src">CAG, 2017–23</div></div>
+            <div class="stat green"><div class="num" style="font-size:23px">Demand-first</div><div class="lab">the single fix the audit points to — and BetterPlace's core model</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 6 VISION + STACK -->
+  <section class="slide dark">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">The Vision</div>
+        <h2>One Worker. One Verified Profile. One Karnataka Platform.</h2>
+        <p class="lede" style="margin-top:11px">A <strong>Karnataka Talent Stack</strong> — a state asset Karnataka owns forever. Every worker skilled and placed compounds into one verified, lifelong profile: the state's living system of record.</p>
+      </div>
+      <div class="fill">
+        <div class="split">
+          <div>
+            <div class="own">
+              <div class="row"><span class="k">01</span><span class="v"><b>Karnataka owns the data.</b> BetterPlace runs the engine; the registry &amp; governance stay with the state.</span></div>
+              <div class="row"><span class="k">02</span><span class="v"><b>The asset appreciates.</b> Every placement enriches the profile — worth more the longer it runs.</span></div>
+              <div class="row"><span class="k">03</span><span class="v"><b>Built to be copied.</b> As with gig-worker welfare, Karnataka sets the national standard.</span></div>
+            </div>
+            <div class="quote" style="margin-top:16px">Formalise the workforce the way UPI formalised payments — trusted, verified, built for scale.</div>
+          </div>
+          <div class="stack">
+            <div class="stack-lab">Serves</div>
+            <div class="srow">
+              <div class="node">CM Dashboard<span>real-time</span></div>
+              <div class="node">Employers<span>verified</span></div>
+              <div class="node">Workers<span>one profile</span></div>
+              <div class="node">Innovators<span>APIs</span></div>
+            </div>
+            <div class="flow">▲ &nbsp; ▲ &nbsp; ▲ &nbsp; ▲</div>
+            <div class="golden"><div class="gt">One Verified Worker Profile</div><div class="gs">Aadhaar / UAN anchored · deduplicated golden record</div></div>
+            <div class="flow">▲ &nbsp; ▲ &nbsp; ▲ &nbsp; ▲</div>
+            <div class="stack-lab">Fed automatically by</div>
+            <div class="srow">
+              <div class="feed">e-Shram</div><div class="feed">EPFO</div><div class="feed">ESIC</div><div class="feed">KSDC</div><div class="feed">Seva Sindhu</div><div class="feed">Dist. Exch.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 7 ENGINE -->
+  <section class="slide paper">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">How BetterPlace Generates Jobs</div>
+        <h2>The fix for "train-and-hope": a closed-loop jobs engine.</h2>
+        <p class="lede" style="margin-top:11px">We don't hand the state a portal. We run the full loop against <strong>live employer demand</strong> — and hand back placed, verified Kannadiga workers.</p>
+      </div>
+      <div class="fill">
+        <div class="engine">
+          <div class="estep"><div class="en">01</div><h4>Source</h4><p>Kannada-first WhatsApp, IVR &amp; community drives reach rural &amp; North Karnataka youth.</p></div>
+          <div class="earrow">→</div>
+          <div class="estep"><div class="en">02</div><h4>Skill · AI</h4><p>Mobile-first learning mapped to the roles employers are hiring for — district by district.</p></div>
+          <div class="earrow">→</div>
+          <div class="estep"><div class="en">03</div><h4>Assess · AI</h4><p>AI-proctored, audit-ready certification aligned to NSQF &amp; Sector Skill Councils.</p></div>
+          <div class="earrow">→</div>
+          <div class="estep"><div class="en">04</div><h4>Place</h4><p>Matched to verified employers via AasaanJobs &amp; OkayGo — guaranteed-placement commitments.</p></div>
+          <div class="earrow">→</div>
+          <div class="estep"><div class="en">05</div><h4>Formalise</h4><p>A verified, portable profile + benefits — every worker counted, every job visible.</p></div>
+        </div>
+        <div class="eloop">↺ &nbsp; Skilled against real vacancies · paid on verified placement — the opposite of what the audit found &nbsp; ↺</div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 8 AI -->
+  <section class="slide dark">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">The AI Advantage</div>
+        <h2>AI that speaks Kannada, runs on a ₹6,000 phone, and understands a warehouse picker.</h2>
+        <p class="lede" style="margin-top:11px">Most AI is built for the knowledge worker. Ours is built for the frontline — trained on the largest frontline workforce dataset in Asia.</p>
+      </div>
+      <div class="fill">
+        <div class="grid g2">
+          <div class="card"><h3><span class="tick">◆</span>AI-personalised upskilling</h3><p>Learning paths adapt to each worker's role, literacy &amp; pace — and to the vacancies open in their district now.</p></div>
+          <div class="card"><h3><span class="tick">◆</span>AI assessment &amp; proctoring</h3><p>Tamper-resistant, audit-ready skill assessments — trusted certification at population scale.</p></div>
+          <div class="card"><h3><span class="tick">◆</span>Kannada-first voice &amp; chat</h3><p>Conversational agents in <strong>35+ languages</strong>, Kannada-led — onboarding &amp; interview prep over WhatsApp &amp; voice.</p></div>
+          <div class="card"><h3><span class="tick">◆</span>Intelligent job matching</h3><p>Skills, location &amp; preference matched to live demand — explainable, so a worker knows <em>why</em>.</p></div>
+        </div>
+        <p class="lede" style="margin-top:14px;max-width:none">The moat isn't the model — it's the <strong>frontline data</strong>: the largest verified record of who India's blue &amp; grey collar workers are, and where they get placed.</p>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 9 WHY + PROOF -->
+  <section class="slide paper">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">Why BetterPlace</div>
+        <h2>Asia's largest frontline platform — born in Bengaluru.</h2>
+      </div>
+      <div class="fill">
+        <div class="split narrow top">
+          <div>
+            <div class="grid g2" style="margin-bottom:14px">
+              <div class="stat"><div class="num">30M+</div><div class="lab">frontline workers on the platform</div></div>
+              <div class="stat green"><div class="num">1,500+</div><div class="lab">enterprises trust BetterPlace</div></div>
+              <div class="stat"><div class="num">2.5M+</div><div class="lab">workers skilled <span class="chip c-co">Company</span></div></div>
+              <div class="stat navy"><div class="num">500+</div><div class="lab">cities live — deep last-mile reach</div></div>
+            </div>
+            <p class="lede" style="font-size:14px">Bengaluru-headquartered, 10+ years rooted in Karnataka — <strong>this is home.</strong></p>
+          </div>
+          <div>
+            <div class="eyebrow" style="margin-bottom:11px">Proof · We place, not just train &nbsp;<span class="chip c-co">Company</span></div>
+            <div class="stat" style="margin-bottom:10px"><div class="num" style="color:var(--orange-deep)">2.5 L+</div><div class="lab"><strong>placed into real jobs</strong> — via AasaanJobs &amp; OkayGo, our recruitment &amp; gig-placement engines</div></div>
+            <div class="stat" style="margin-bottom:12px"><div class="num" style="color:var(--orange-deep)">70% → 89%</div><div class="lab">and the skilling works: AI-led completion lift — IFFCO Tokio, 50k+ advisors, 4 AI agents live</div></div>
+            <div class="logos">
+              <span class="logo">skillBetter</span><span class="logo">AasaanJobs</span><span class="logo">OkayGo</span><span class="logo">staffBetter</span><span class="logo">gigBetter</span>
+            </div>
+            <p class="lede" style="margin-top:11px;font-size:13px">Frontline deployments in Karnataka &amp; beyond — Meesho, Amazon, Reliance, Hindalco, Titan &amp; BPCL.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 10 PRIORITIES -->
+  <section class="slide dark">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">Your Priorities, Already Announced</div>
+        <h2>We are the rail that operationalises your own agenda.</h2>
+        <p class="lede" style="margin-top:11px">You have set the targets and passed the laws. What's missing is the delivery engine underneath them.</p>
+      </div>
+      <div class="fill">
+        <div class="grid g4">
+          <div class="card"><h3>Yuva Yuga · Youth Employment Bridge</h3><p>Your flagship — global-standard skills, <strong>skill-mapping to industry demand</strong>, and a bridge to a job. That is exactly this engine: source → skill → assess → place.</p></div>
+          <div class="card"><h3>Kannadigas in private jobs</h3><p>Your Day-1 commitment. A verified talent stack routes <strong>skilled Kannadigas to the employers hiring in their own district</strong>.</p></div>
+          <div class="card"><h3>Gig Workers Act 2025</h3><p>The landmark welfare law (1–5% fee, state board). We run the <strong>worker registry &amp; benefit distribution</strong> that makes it real.</p></div>
+          <div class="card"><h3>Built on state rails</h3><p>Plugs into <strong>KSDC, Seva Sindhu &amp; district exchanges</strong> — no rip-and-replace. Serves the Clean Mobility (1L) &amp; GCC (3.5L) targets directly.</p></div>
+        </div>
+        <div class="quote" style="margin-top:18px">Karnataka moved first on gig welfare. The same first-mover advantage is available on frontline skilling &amp; placement.</div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 11 PILLARS -->
+  <section class="slide dark">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">Five Strategic Pillars</div>
+        <h2>The mission rests on five pillars.</h2>
+      </div>
+      <div class="fill">
+        <div class="grid g5">
+          <div class="pillar"><div class="pn">01</div><div class="pic">◈</div><h3>One Worker Profile</h3><p>A verified, portable, lifelong Kannadiga worker ID, updated across life events.</p></div>
+          <div class="pillar"><div class="pn">02</div><div class="pic">▣</div><h3>Employer Enablement</h3><p>A verified registry for MSMEs &amp; industrial clusters, with bulk posting.</p></div>
+          <div class="pillar"><div class="pn">03</div><div class="pic">◎</div><h3>Skill-to-Job Bridge</h3><p>KSDC courses mapped to live employer demand — the CAG fix, built in.</p></div>
+          <div class="pillar"><div class="pn">04</div><div class="pic">◍</div><h3>Activate Women</h3><p>Only ~38% female LFPR today. Vernacular, safe-transport onboarding into garments, care &amp; retail.</p></div>
+          <div class="pillar"><div class="pn">05</div><div class="pic">▤</div><h3>Gig Formalisation</h3><p>Portable benefits &amp; social security under the 2025 Act — delivery, mobility, platforms.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 12 PILOT + ROADMAP -->
+  <section class="slide paper">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">The On-Ramp</div>
+        <h2>Start in 90 days. Scale over 36 months.</h2>
+        <p class="lede" style="margin-top:11px">A district-first pilot that proves placements &amp; the live dashboard before statewide rollout — <strong>funded on verified outcomes</strong>, so the state pays for placements delivered, not promises.</p>
+      </div>
+      <div class="fill">
+        <div class="split narrow top">
+          <div>
+            <div class="eyebrow" style="margin-bottom:10px">The 90-day pilot</div>
+            <div class="grid" style="gap:9px">
+              <div class="card"><p><strong style="color:var(--ink)">3 districts</strong> — Bengaluru Urban, the Belagavi–Hubballi belt &amp; Mysuru. Bengaluru and beyond, from day one.</p></div>
+              <div class="card"><p><strong style="color:var(--ink)">Anchor-employer verification</strong> + live sourcing, AI skilling &amp; guaranteed placements in priority roles.</p></div>
+              <div class="card"><p><strong style="color:var(--ink)">First cut of the CM dashboard</strong> — district-level jobs visibility from day one.</p></div>
+            </div>
+          </div>
+          <div>
+            <div class="eyebrow" style="margin-bottom:10px">What we ask</div>
+            <div class="grid" style="gap:9px">
+              <div class="card"><h3>Policy sponsorship</h3><p>Endorsement under the Industrial Policy &amp; State Skill Development Mission.</p></div>
+              <div class="card"><h3>Data &amp; platform access</h3><p>Linkage to Seva Sindhu, KSDC &amp; district exchange records.</p></div>
+              <div class="card"><h3>A joint working group</h3><p>With Labour &amp; Skill Development, convened within <strong style="color:var(--ink)">30 days</strong>.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="phasebar">
+          <div class="pmini"><div class="pt">Phase 1 · 0–6 mo</div><h4>Pilot Districts</h4><p>Three districts live · District Employment &amp; Skilling Councils stood up.</p></div>
+          <div class="pmini"><div class="pt">Phase 2 · 6–18 mo</div><h4>Statewide</h4><p>Karnataka Worker ID on Aadhaar/UAN · employer APIs open.</p></div>
+          <div class="pmini"><div class="pt">Phase 3 · 18–36 mo</div><h4>Stack Live</h4><p>Full career stack · real-time CM dashboard · replicable model.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 13 IMPACT -->
+  <section class="slide dark">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">Expected Impact by Year 3 &nbsp;·&nbsp; <span class="chip c-proj">Targets</span></div>
+        <h2>Measurable outcomes the CM's office tracks live.</h2>
+      </div>
+      <div class="fill">
+        <div class="grid g4" style="margin-bottom:12px">
+          <div class="stat"><div class="num">5 L+</div><div class="lab">verified placements facilitated by Year 3 — a share of the state's <strong>6 L+ jobs pipeline</strong></div></div>
+          <div class="stat green"><div class="num">90%</div><div class="lab">employer verification across priority industrial clusters</div></div>
+          <div class="stat"><div class="num">2×</div><div class="lab">women's frontline participation in target districts — from a ~38% base</div></div>
+          <div class="stat navy"><div class="num">1</div><div class="lab">single, lifelong verified profile per registered worker</div></div>
+        </div>
+        <p class="lede" style="font-size:11px;color:var(--tx-dmute);margin-bottom:12px">Targets, not commitments — scaled from pilot placement rates across districts and quarters, against Karnataka's active investment-linked pipeline. Every number is verified and counted on the CM dashboard.</p>
+        <div class="quote">Karnataka becomes India's first state with a fully verified, real-time picture of its frontline labour market — a model other states replicate, and a signal to industry that Karnataka is the most job-ready state to invest in.</div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 14 ASK -->
+  <section class="slide dark">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">The Ask</div>
+        <h2>Karnataka built India's tech capital by deciding to. It can build the livelihoods capital the same way.</h2>
+      </div>
+      <div class="fill">
+        <div class="kan" style="font-size:24px;color:var(--orange);margin-bottom:12px;line-height:1.4">ಕರ್ನಾಟಕ ನಮ್ಮ ಮನೆ. ಕನ್ನಡಿಗರಿಗೆ ಕೆಲಸ ನಮ್ಮ ಗುರಿ.</div>
+        <p class="lede">Karnataka is home. Jobs for Kannadigas is the goal. We're asking for an in-principle endorsement of the vision — and for <strong>BetterPlace as Karnataka's delivery partner</strong>, starting with the 90-day pilot.</p>
+        <div class="cta">
+          <h3>What we'd like to walk out with</h3>
+          <div class="asks">
+            <div class="ask"><span class="n">01</span><span class="t">Endorsement of the vision &amp; BetterPlace as execution partner</span></div>
+            <div class="ask"><span class="n">02</span><span class="t">A committed pilot across three districts</span></div>
+            <div class="ask"><span class="n">03</span><span class="t">A joint working group convened within 30 days</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · goBetter · gigBetter · staffBetter · betterMoney</span><span class="pg"></span></div>
+  </section>
+
+  <!-- 15 SOURCES -->
+  <section class="slide paper">
+    <div class="body">
+      <div class="head">
+        <div class="eyebrow">Sources &amp; Notes</div>
+        <h2>The evidence behind this proposal.</h2>
+      </div>
+      <div class="fill">
+        <ul class="sources">
+          <li><b>Invest Karnataka 2025</b> — ₹10.27 lakh Cr committed, 6 lakh jobs projected; ~2.3 lakh realised by end-2025 (Govt. of Karnataka).</li>
+          <li><b>Invest Karnataka Conclave, Feb 2026</b> — ₹51,469 Cr / 70,000+ jobs; sector split across ESDM &amp; data centres, aerospace, manufacturing, auto/EV.</li>
+          <li><b>KA Labour Department, 2026</b> — 46,393 registered inter-state migrants (a floor); 40,945 (88%) in construction; top-5 source states 72.5%.</li>
+          <li><b>Quick-commerce hiring data, 2025</b> — Karnataka #1 hub at 20% of national demand.</li>
+          <li><b>CAG Karnataka, Report No. 6 of 2025 (CMKKY)</b> — 18.18% placement vs 70% target; training in 170 of 719 roles; courses chosen without demand evidence; northern districts held zero skill-mission meetings 2017–23.</li>
+          <li><b>PLFS 2023–24 (MoSPI)</b> — Karnataka female LFPR ~38%; occupational segregation across frontline sectors.</li>
+          <li><b>Garment sector, 2025</b> — ~5 lakh workers in Bengaluru, ~90% women; substantial inter-district mobility.</li>
+          <li><b>Karnataka Clean Mobility Policy 2025–30</b> — ₹50,000 Cr / 1 lakh jobs by 2030. <b>GCC</b> — 3.5 lakh jobs by 2029. <b>Tourism Policy 2024–29</b> — 47,000 direct + 1 lakh+ indirect.</li>
+          <li><b>Karnataka Platform-Based Gig Workers (Social Security &amp; Welfare) Act 2025</b> — 1–5% welfare fee &amp; state board.</li>
+          <li><b>BetterPlace company figures</b> — 30M+ workers, 1,500+ enterprises, 500+ cities; 2.5M+ skilled, 2.5L+ placed; IFFCO Tokio 70%→89%, 4 AI agents, 50k+ advisors.</li>
+        </ul>
+        <p class="lede" style="margin-top:4px;font-size:11px;color:var(--ink-mute)">Investment &amp; policy job figures are Government of Karnataka commitments/targets and must not be summed. Migrant counts are registration floors. Year-3 outcomes are targets. BetterPlace figures are company-reported.</p>
+      </div>
+    </div>
+    <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
+  </section>
+
+</div><!-- /stage -->
+</div><!-- /viewport -->
+
+<div class="nav">
+  <button id="prev" aria-label="Previous">‹</button>
+  <div class="dots" id="dots"></div>
+  <span class="counter" id="counter"></span>
+  <button id="next" aria-label="Next">›</button>
+</div>
+
+<script>
+  const stage=document.getElementById('stage');
+  function fit(){
+    const s=Math.min(window.innerWidth/1280, window.innerHeight/720);
+    stage.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit); fit();
+
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length;
+  let i=0;
+  const dots=document.getElementById('dots');
+  const counter=document.getElementById('counter');
+  const bar=document.getElementById('bar');
+  const pad=n=>String(n).padStart(2,'0');
+  slides.forEach((s,n)=>{const f=s.querySelector('.pg');if(f)f.textContent=pad(n+1);});
+  slides.forEach((_,n)=>{const d=document.createElement('div');d.className='dot'+(n===0?' on':'');d.onclick=()=>go(n);dots.appendChild(d);});
+  const dotEls=[...dots.children];
+  function go(n){
+    if(n<0||n>=total)return;
+    slides[i].classList.remove('active');dotEls[i].classList.remove('on');
+    i=n;
+    slides[i].classList.add('active');dotEls[i].classList.add('on');
+    counter.textContent=pad(i+1)+' / '+pad(total);
+    bar.style.width=(i/(total-1)*100)+'%';
+  }
+  document.getElementById('next').onclick=()=>go(i+1);
+  document.getElementById('prev').onclick=()=>go(i-1);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')go(i+1);
+    if(e.key==='ArrowLeft'||e.key==='PageUp')go(i-1);
+    if(e.key==='Home')go(0);if(e.key==='End')go(total-1);
+  });
+  let sx=0,sy=0;
+  document.addEventListener('touchstart',e=>{sx=e.changedTouches[0].screenX;sy=e.changedTouches[0].screenY;},{passive:true});
+  document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].screenX-sx,dy=e.changedTouches[0].screenY-sy;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))dx<0?go(i+1):go(i-1);},{passive:true});
+  counter.textContent='01 / '+pad(total);
+</script>
+</body>
+</html>

@@ -143,6 +143,18 @@
   .vc-foot{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;background:var(--paper-warm);font-family:var(--mono);font-size:8px;letter-spacing:.03em;color:var(--ink-mute);text-transform:uppercase}
   .vc-foot .t{color:var(--navy);font-weight:600}
 
+  /* vision stack — animation */
+  .flow{display:flex;justify-content:center;gap:24px}
+  .flow span{display:inline-block;color:var(--orange);animation:flowUp 1.8s ease-in-out infinite}
+  .flow span:nth-child(2){animation-delay:.22s}.flow span:nth-child(3){animation-delay:.44s}.flow span:nth-child(4){animation-delay:.66s}
+  @keyframes flowUp{0%{opacity:.15;transform:translateY(3px)}45%{opacity:1;color:var(--gold)}100%{opacity:.15;transform:translateY(-3px)}}
+  @keyframes vrise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes cardGlow{0%,100%{box-shadow:0 20px 46px -16px rgba(0,0,0,.5),0 0 0 0 rgba(16,185,129,0)}50%{box-shadow:0 20px 46px -16px rgba(0,0,0,.5),0 0 28px 1px rgba(16,185,129,.5)}}
+  .slide.active .stack .node{animation:vrise .5s ease both;animation-delay:.15s}
+  .slide.active .stack .vcard{animation:vrise .55s ease both .3s, cardGlow 3.2s ease-in-out 1s infinite}
+  .slide.active .stack .feed{animation:vrise .5s ease both;animation-delay:.5s}
+  .slide.active .stack .stack-lab{animation:vrise .5s ease both;animation-delay:.08s}
+
   .engine{display:flex;align-items:stretch;gap:8px}
   .estep{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--line-d);border-radius:12px;padding:15px 12px}
   .paper .estep{background:#fff;border-color:var(--line-p)}
@@ -346,7 +358,7 @@
               <div class="node">Workers<span>one profile</span></div>
               <div class="node">Innovators<span>APIs</span></div>
             </div>
-            <div class="flow">▲ &nbsp; ▲ &nbsp; ▲ &nbsp; ▲</div>
+            <div class="flow"><span>▲</span><span>▲</span><span>▲</span><span>▲</span></div>
             <div class="vcard">
               <div class="vc-top"><div class="vc-av">✓</div><div><div class="vc-nm">One Verified Profile</div><div class="vc-rl">Aadhaar / UAN anchored</div></div><div class="vc-badge"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verified</div></div>
               <div class="vc-body">
@@ -355,7 +367,7 @@
               </div>
               <div class="vc-foot"><span>Golden record</span><span class="t">Karnataka Talent Stack</span></div>
             </div>
-            <div class="flow">▲ &nbsp; ▲ &nbsp; ▲ &nbsp; ▲</div>
+            <div class="flow"><span>▲</span><span>▲</span><span>▲</span><span>▲</span></div>
             <div class="stack-lab">Fed automatically by</div>
             <div class="srow">
               <div class="feed">e-Shram</div><div class="feed">EPFO</div><div class="feed">ESIC</div><div class="feed">KSDC</div><div class="feed">Seva Sindhu</div><div class="feed">Dist. Exch.</div>

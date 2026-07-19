@@ -122,6 +122,27 @@
   .own .v{font-size:13.5px;line-height:1.45;color:var(--tx-dmute)}.own .v b{color:#fff;font-weight:600}
   .paper .own .v{color:var(--ink-soft)}.paper .own .v b{color:var(--ink)}
 
+  /* phone mockup + product visuals */
+  .phone{position:relative;width:160px;border-radius:24px;background:#0b1030;padding:6px;box-shadow:0 24px 56px -14px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);margin:0 auto}
+  .phone::before{content:"";position:absolute;top:11px;left:50%;transform:translateX(-50%);width:42px;height:5px;border-radius:5px;background:rgba(255,255,255,.22);z-index:2}
+  .phone img{width:100%;display:block;border-radius:19px}
+  .phonecap{text-align:center;margin-top:11px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--tx-dmute)}
+  .paper .phonecap{color:var(--ink-mute)}
+  /* verified worker-credential card */
+  .vcard{background:#fff;border-radius:13px;overflow:hidden;box-shadow:0 20px 46px -16px rgba(0,0,0,.5);width:100%;max-width:300px;margin:0 auto}
+  .vc-top{display:flex;align-items:center;gap:10px;padding:12px 14px;background:linear-gradient(120deg,var(--navy),#16264f);color:#fff}
+  .vc-av{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--navy);font-family:var(--serif);font-weight:600;font-size:14px;display:grid;place-items:center;flex:none}
+  .vc-nm{font-family:var(--serif);font-weight:600;font-size:14px;line-height:1.1}
+  .vc-rl{font-size:10px;color:rgba(255,255,255,.7);margin-top:2px}
+  .vc-badge{margin-left:auto;display:inline-flex;align-items:center;gap:4px;background:var(--green);color:#04331f;font-family:var(--mono);font-size:8px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:5px 8px;border-radius:20px;white-space:nowrap}
+  .vc-badge svg{width:9px;height:9px;stroke:currentColor;fill:none;stroke-width:3.5}
+  .vc-body{padding:9px 14px}
+  .vc-row{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:11px;color:var(--ink-soft)}
+  .vc-row svg{width:13px;height:13px;stroke:var(--green);fill:none;stroke-width:2.6;flex:none}
+  .vc-row b{color:var(--ink);font-weight:600}
+  .vc-foot{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;background:var(--paper-warm);font-family:var(--mono);font-size:8px;letter-spacing:.03em;color:var(--ink-mute);text-transform:uppercase}
+  .vc-foot .t{color:var(--navy);font-weight:600}
+
   .engine{display:flex;align-items:stretch;gap:8px}
   .estep{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--line-d);border-radius:12px;padding:15px 12px}
   .paper .estep{background:#fff;border-color:var(--line-p)}
@@ -180,7 +201,6 @@
   <section class="slide dark cover active">
     <div class="glow"></div>
     <div class="body">
-      <div class="kflag"><span></span><span></span></div>
       <div class="kicker">A Proposal for the Government of Karnataka</div>
       <h1>Karnataka's Next<br>Jobs Engine</h1>
       <div class="kanline">ಕನ್ನಡಿಗರಿಗೆ ಕೆಲಸ — ಕರ್ನಾಟಕದಲ್ಲೇ</div>
@@ -327,7 +347,14 @@
               <div class="node">Innovators<span>APIs</span></div>
             </div>
             <div class="flow">▲ &nbsp; ▲ &nbsp; ▲ &nbsp; ▲</div>
-            <div class="golden"><div class="gt">One Verified Worker Profile</div><div class="gs">Aadhaar / UAN anchored · deduplicated golden record</div></div>
+            <div class="vcard">
+              <div class="vc-top"><div class="vc-av">✓</div><div><div class="vc-nm">One Verified Profile</div><div class="vc-rl">Aadhaar / UAN anchored</div></div><div class="vc-badge"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Verified</div></div>
+              <div class="vc-body">
+                <div class="vc-row"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Identity, skills &amp; placement <b>on record</b></div>
+                <div class="vc-row"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Portable, lifelong, <b>deduplicated</b></div>
+              </div>
+              <div class="vc-foot"><span>Golden record</span><span class="t">Karnataka Talent Stack</span></div>
+            </div>
             <div class="flow">▲ &nbsp; ▲ &nbsp; ▲ &nbsp; ▲</div>
             <div class="stack-lab">Fed automatically by</div>
             <div class="srow">
@@ -375,13 +402,18 @@
         <p class="lede" style="margin-top:11px">Most AI is built for office workers. Ours is built for the frontline, trained on the largest frontline workforce dataset in Asia.</p>
       </div>
       <div class="fill">
-        <div class="grid g2">
-          <div class="card"><h3><span class="tick">◆</span>AI-personalised upskilling</h3><p>Learning paths adapt to each worker's role, literacy &amp; pace — and to the vacancies open in their district now.</p></div>
-          <div class="card"><h3><span class="tick">◆</span>AI assessment &amp; proctoring</h3><p>Tamper-resistant, audit-ready skill assessments — trusted certification at population scale.</p></div>
-          <div class="card"><h3><span class="tick">◆</span>Kannada-first voice &amp; chat</h3><p>Conversational agents in <strong>35+ languages</strong>, Kannada-led — onboarding &amp; interview prep over WhatsApp &amp; voice.</p></div>
-          <div class="card"><h3><span class="tick">◆</span>Intelligent job matching</h3><p>Skills, location &amp; preference matched to live demand — explainable, so a worker knows <em>why</em>.</p></div>
+        <div class="split top" style="grid-template-columns:1.35fr .65fr;gap:34px">
+          <div class="grid g2">
+            <div class="card"><h3><span class="tick">◆</span>AI-personalised upskilling</h3><p>Learning paths adapt to each worker's role, literacy &amp; pace — and to the vacancies open in their district now.</p></div>
+            <div class="card"><h3><span class="tick">◆</span>AI assessment &amp; proctoring</h3><p>Tamper-resistant, audit-ready skill tests — trusted certification at population scale.</p></div>
+            <div class="card"><h3><span class="tick">◆</span>Kannada-first voice &amp; chat</h3><p>Agents in <strong>35+ languages</strong>, Kannada-led — onboarding &amp; interview prep over WhatsApp &amp; voice.</p></div>
+            <div class="card"><h3><span class="tick">◆</span>Intelligent job matching</h3><p>Skills, location &amp; preference matched to live demand — explainable, so a worker knows <em>why</em>.</p></div>
+          </div>
+          <div>
+            <div class="phone"><img src="assets/app-proctoring.webp" alt="skillBetter AI proctoring, live in the app"/></div>
+            <div class="phonecap">AI proctoring · live in the skillBetter app</div>
+          </div>
         </div>
-        <p class="lede" style="margin-top:14px;max-width:none">Our edge isn't the AI model. It's the <strong>data</strong>: the largest verified record of who India's frontline workers are, and where they get placed.</p>
       </div>
     </div>
     <div class="footer"><span>BetterPlace · Asia's Largest Frontline Workforce Platform</span><span class="pg"></span></div>
